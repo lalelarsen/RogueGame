@@ -3,7 +3,11 @@ using System.Collections;
 
 public class RandMovement : MonoBehaviour {
 	public float speed;
-	private int count = 0;
+	public float chaseDistance;
+	private const float minBound = -4.85f;
+	private const float maxBound = 4.85f;
+	public GameObject Playermove;
+	private float distance;
 	// Use this for initialization
 	void Start () {
 		
@@ -11,33 +15,57 @@ public class RandMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		float yAxis = transform.position.y;
-		float xAxis = transform.position.x;
-		float RanAxisFloat = Random.Range (-10f, 10f);
+		distance = Vector2.Distance (transform.position, Playermove.transform.position);
+		if(distance < chaseDistance){
+			Debug.Log ("im chasin you!!!");
+			EnemyChaseMovement (chaseDistance);
+		}else{
+			RandomEnemyMovement ();	
+		}
 
 
-			if (count % 2 == 0) {
 
-				Vector2 newYposition = new Vector2 (xAxis, yAxis + RanAxisFloat * Time.deltaTime);
-				transform.position = newYposition;
+ 	}
+	public void EnemyChaseMovement (float chaseDist){
+		// fucking lort virker ikke fuck fix det!
+		transform.Translate (Vector2.MoveTowards (transform.position, Playermove.transform.position, chaseDist) * speed * Time.deltaTime);
 
-				count++;
+
+	}
+
+	public void RandomEnemyMovement(){
+		int XYDestinc = Random.Range (-1, 2);
+		int PlusMinusDestinc = Random.Range (-1, 2);
+
+		if (XYDestinc == 1) {
+			// bevægelse på Y Axen
+			if (PlusMinusDestinc == 1) {
+				// bevæg dig + på Y Axen
+				Vector2 newYPPos = new Vector2  ( transform.position.x, Mathf.Clamp(transform.position.y + speed * Time.deltaTime, minBound, maxBound));
+
+				transform.position = newYPPos;
 			} else {
-
-				Vector2 newXposition = new Vector2 (xAxis + RanAxisFloat * Time.deltaTime, yAxis);
-				transform.position = newXposition;
-
-				count++;
+				// bevæg dig - på Y Axen
+				Vector2 newYMPos = new Vector2 (transform.position.x, Mathf.Clamp(transform.position.y - speed * Time.deltaTime, minBound, maxBound));
+				transform.position = newYMPos;
 			}
 
+
+		} else {
+			// bevægelse på X Axen
+			if (PlusMinusDestinc == 1) {
+				// bevæg dig + på X Axen
+				Vector2 newXPPos = new Vector2 (Mathf.Clamp(transform.position.x + speed * Time.deltaTime, minBound, maxBound), transform.position.y);
+				transform.position = newXPPos;
+			} else {
+				// bevæg dig - på X Axen
+				Vector2 newXMPos = new Vector2 (Mathf.Clamp(transform.position.x - speed * Time.deltaTime, minBound, maxBound), transform.position.y);
+				transform.position = newXMPos;
+			}
+
+		}
+	
+	
 	}
 
-	public ArrayList getNextMovement(){
-		ArrayList returnList = new ArrayList ();
-		for (var i = 0; i < 10; i++) {
-			returnList.Add (Random.Range (-10f, 10f));
-		
-		}
-		return returnList;
-	}
 }
