@@ -6,7 +6,7 @@ public class RandMovement : MonoBehaviour {
 	public float chaseDistance;
 	private const float minBound = -4.85f;
 	private const float maxBound = 4.85f;
-	public GameObject Playermove;
+	//public GameObject Playermove;
 	private float distance;
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,7 @@ public class RandMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+		GameObject Playermove = GameObject.Find ("Player");		
 		distance = Vector2.Distance (transform.position, Playermove.transform.position);
 		if(distance < chaseDistance){
 			Debug.Log ("im chasin you!!!");
@@ -28,9 +28,8 @@ public class RandMovement : MonoBehaviour {
 
  	}
 	public void EnemyChaseMovement (GameObject PlayerPos, float chaseDist){
-		// den kører kun dette en gang, dermed bliver dens retning låst hvergang den kører
-		transform.Translate (Vector2.MoveTowards (transform.position, PlayerPos.transform.position, chaseDist) * speed * Time.deltaTime);
-
+		// den kører kun dette en gang, dermed bliver dens retning låst hvergang den kører måske
+		transform.position = Vector2.MoveTowards (transform.position, PlayerPos.transform.position, speed * Time.deltaTime);
 
 	}
 
