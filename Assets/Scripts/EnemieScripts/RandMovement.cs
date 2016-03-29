@@ -15,10 +15,11 @@ public class RandMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		
 		distance = Vector2.Distance (transform.position, Playermove.transform.position);
 		if(distance < chaseDistance){
 			Debug.Log ("im chasin you!!!");
-			EnemyChaseMovement (chaseDistance);
+			EnemyChaseMovement (Playermove , chaseDistance);
 		}else{
 			RandomEnemyMovement ();	
 		}
@@ -26,9 +27,9 @@ public class RandMovement : MonoBehaviour {
 
 
  	}
-	public void EnemyChaseMovement (float chaseDist){
-		// fucking lort virker ikke fuck fix det!
-		transform.Translate (Vector2.MoveTowards (transform.position, Playermove.transform.position, chaseDist) * speed * Time.deltaTime);
+	public void EnemyChaseMovement (GameObject PlayerPos, float chaseDist){
+		// den kører kun dette en gang, dermed bliver dens retning låst hvergang den kører
+		transform.Translate (Vector2.MoveTowards (transform.position, PlayerPos.transform.position, chaseDist) * speed * Time.deltaTime);
 
 
 	}
