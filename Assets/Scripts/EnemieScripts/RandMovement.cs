@@ -6,6 +6,10 @@ public class RandMovement : MonoBehaviour {
 	public float chaseDistance;
 	private const float minBound = -4.85f;
 	private const float maxBound = 4.85f;
+	public int XYmin = -1;
+	public int XYmax = 2;
+	public int PMMin = -1;
+	public int PMMax = 2;
 	//public GameObject Playermove;
 	private float distance;
 	// Use this for initialization
@@ -34,8 +38,8 @@ public class RandMovement : MonoBehaviour {
 	}
 
 	public void RandomEnemyMovement(){
-		int XYDestinc = Random.Range (-1, 2);
-		int PlusMinusDestinc = Random.Range (-1, 2);
+		int XYDestinc = Random.Range (XYmin, XYmax);
+		int PlusMinusDestinc = Random.Range (PMMin, PMMax);
 
 		if (XYDestinc == 1) {
 			// bevægelse på Y Axen

@@ -5,12 +5,14 @@ public class BlockingScriptE : MonoBehaviour {
 
 	GameObject parent;
 	GameObject player;
-	Movements playerScript;
+	Movements Script = Movements();
+	RandMovement Script2 = RandMovement();
 
 	void Start () {
 		parent = gameObject.transform.parent.gameObject;
 		player = parent.transform.parent.gameObject;
-		playerScript = GetComponent<Movements>();
+		Script = GetComponent<Movements>();
+		Script2 = GetComponent<RandMovement> ();
 
 	}
 	
@@ -20,14 +22,17 @@ public class BlockingScriptE : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		Debug.Log (other.tag);
 		if (other.tag == "Obstacle") {
-			playerScript.EBlocked = true;
+			Script.EBlocked = true;
+			Script2.PMMax = 1;
 		}
 	}
 
 	void OnTriggerExit(Collider other) {
 		if (other.tag == "Obstacle") {
-			playerScript.EBlocked = false;
+			Script.EBlocked = false;
+			Script2.PMMax = 2;
 		}
 	}
 
