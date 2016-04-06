@@ -10,6 +10,11 @@ public class RandMovement : MonoBehaviour {
 	public int XYmax = 2;
 	public int PMMin = -1;
 	public int PMMax = 2;
+
+	public bool blockedN = false;
+	public bool blockedS = false;
+	public bool blockedE = false;
+	public bool blockedW = false;
 	//public GameObject Playermove;
 	private float distance;
 	// Use this for initialization
@@ -22,7 +27,7 @@ public class RandMovement : MonoBehaviour {
 		GameObject Playermove = GameObject.Find ("Player");		
 		distance = Vector2.Distance (transform.position, Playermove.transform.position);
 		if(distance < chaseDistance){
-			Debug.Log ("im chasin you!!!");
+			//Debug.Log ("im chasin you!!!");
 			EnemyChaseMovement (Playermove , chaseDistance);
 		}else{
 			RandomEnemyMovement ();	
@@ -32,9 +37,13 @@ public class RandMovement : MonoBehaviour {
 
  	}
 	public void EnemyChaseMovement (GameObject PlayerPos, float chaseDist){
-		// den kører kun dette en gang, dermed bliver dens retning låst hvergang den kører måske
-		transform.position = Vector2.MoveTowards (transform.position, PlayerPos.transform.position, speed * Time.deltaTime);
-
+		
+		if (blockedN) {
+			Vector2 newPosition = new Vector2 (PlayerPos.transform.position.x, transform.position.y);	
+			transform.position = Vector2.MoveTowards (transform.position, newPosition, speed * Time.deltaTime);
+		} else {
+			transform.position = Vector2.MoveTowards (transform.position, PlayerPos.transform.position, speed * Time.deltaTime);
+		}
 	}
 
 	public void RandomEnemyMovement(){
