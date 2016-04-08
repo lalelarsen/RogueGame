@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class HealthScript : MonoBehaviour {
-	public double healthPoints;
+	
+	public float healthPoints;
+	public float armorPoints;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,5 +15,9 @@ public class HealthScript : MonoBehaviour {
 		
 	}
 
-
+	public float TakeDamge(float dmg){
+	
+		return healthPoints = healthPoints - dmg;
+		 
+	}
 }
