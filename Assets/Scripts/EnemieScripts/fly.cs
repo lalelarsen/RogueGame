@@ -8,11 +8,13 @@ public class fly : MonoBehaviour {
 	Vector2 heading;
 	float speed = 350;
 	Rigidbody2D rb;
+	Rigidbody2D tRb;
 
 	void Start () {
 		
 		target = GameObject.Find ("Player");
 		rb = gameObject.GetComponent<Rigidbody2D> ();
+		tRb = target.GetComponent<Rigidbody2D> ();
 		heading = target.transform.position - transform.position;
 		float targetAngle = Mathf.Atan2 (heading.x, heading.y) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.Euler (0, 0, -targetAngle);
@@ -21,6 +23,7 @@ public class fly : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.name == "Player") {
+			tRb.AddForce (heading * speed/3);
 			gameObject.SetActive (false);
 		}
 	}

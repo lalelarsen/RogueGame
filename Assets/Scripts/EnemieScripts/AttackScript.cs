@@ -6,7 +6,7 @@ public class AttackScript : MonoBehaviour {
 	public int attackSpeed;
 	private GameObject thePlayer;
 	private HealthScript HPScript;
-	bool firsttouch = false;
+
 
 
 
@@ -15,18 +15,21 @@ public class AttackScript : MonoBehaviour {
 		float StartTime = Time.time;
 		thePlayer = GameObject.Find ("Player");
 		HPScript = thePlayer.GetComponent<HealthScript>();
-		Rigidbody2D rigidMe = GetComponent<Rigidbody2D> ();
+		//Rigidbody2D rigidMe = GetComponent<Rigidbody2D> ();
 
 	}
 
 	void OnCollisionEnter2D(Collision2D coll){
 		Rigidbody2D rigidPlayer = thePlayer.GetComponent<Rigidbody2D> ();
-		if (firsttouch == false) {
-			firsttouch = true;
-			print ("onEnter");
+
+	
+			//print ("onEnter");
 			float TouchTime = Time.time;
-			float force = 1;
-				
+			float force = 400;
+			Vector2 dir = (thePlayer.transform.position - transform.position);
+
+			rigidPlayer.AddForce (dir * force);
+
 
 			if (HPScript.healthPoints > 0f) {
 				
@@ -38,8 +41,7 @@ public class AttackScript : MonoBehaviour {
 				Destroy (thePlayer);
 
 			}
-			StartCoroutine (knocbak ());
-		}
+
 
 	}
 	// Update is called once per frame

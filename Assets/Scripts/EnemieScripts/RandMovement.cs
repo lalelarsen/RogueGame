@@ -15,11 +15,13 @@ public class RandMovement : MonoBehaviour {
 	public bool blockedS = false;
 	public bool blockedE = false;
 	public bool blockedW = false;
+
+	Rigidbody2D rb;
 	//public GameObject Playermove;
 	private float distance;
 	// Use this for initialization
 	void Start () {
-		
+		rb = gameObject.GetComponent<Rigidbody2D> ();
 	}
 
 	// Update is called once per frame
@@ -32,8 +34,10 @@ public class RandMovement : MonoBehaviour {
 		}else{
 			RandomEnemyMovement ();	
 		}
-
-
+		if(rb.velocity.x != 0 || rb.velocity.y != 0){
+			Vector2 n = rb.velocity * -1 * 3;
+			rb.AddForce (n);
+		}
 
  	}
 	public void EnemyChaseMovement (GameObject PlayerPos, float chaseDist){
