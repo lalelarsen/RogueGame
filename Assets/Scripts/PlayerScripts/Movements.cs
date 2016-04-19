@@ -9,9 +9,10 @@ public class Movements : MonoBehaviour {
 	bool s = false;
 	bool a = false;
 	bool d = false;
+	Rigidbody2D rb;
 	// Use this for initialization
 	void Start () {
-		
+		rb = gameObject.GetComponent<Rigidbody2D> ();
 	}
 
 	// Update is called once per frame
@@ -52,6 +53,12 @@ public class Movements : MonoBehaviour {
 
 			transform.position = newposition;
 		}
+
+		if(rb.velocity.x != 0 || rb.velocity.y != 0){
+			Vector2 n = rb.velocity * -1 * 3;
+			rb.AddForce (n);
+		}
+
 
 	}
 }
