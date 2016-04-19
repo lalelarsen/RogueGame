@@ -21,8 +21,7 @@ public class AttackScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll){
 		Rigidbody2D rigidPlayer = thePlayer.GetComponent<Rigidbody2D> ();
-
-	
+		if (coll.gameObject.name == "Player") {
 			//print ("onEnter");
 			float TouchTime = Time.time;
 			float force = 400;
@@ -42,7 +41,7 @@ public class AttackScript : MonoBehaviour {
 
 			}
 
-
+		}
 	}
 	// Update is called once per frame
 	void Update () {
