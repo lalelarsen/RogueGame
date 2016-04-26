@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Shooting : MonoBehaviour {
 
@@ -11,8 +12,9 @@ public class Shooting : MonoBehaviour {
 
 	void Start () {
 		i = Time.time;
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Time.time > i + fireRate) {
