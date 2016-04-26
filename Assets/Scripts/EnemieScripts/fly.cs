@@ -23,14 +23,14 @@ public class fly : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.name == "Player") {
-			tRb.AddForce (heading * speed/3);
-			gameObject.SetActive (false);
+			tRb.AddForce (heading * speed);
 		}
+		gameObject.SetActive (false);
 	}
 
 
 	void Update () {
-		
+		heading = target.transform.position - transform.position;
 	}
 
 
