@@ -5,7 +5,7 @@ public class AttackScript : MonoBehaviour {
 	public float attackDamage;
 	public int attackSpeed;
 	private GameObject thePlayer;
-	private HealthScript HPScript;
+	private HealthScript PlayerHPScript;
 
 
 
@@ -14,7 +14,7 @@ public class AttackScript : MonoBehaviour {
 	void Start () {
 		float StartTime = Time.time;
 		thePlayer = GameObject.Find ("Player");
-		HPScript = thePlayer.GetComponent<HealthScript>();
+		PlayerHPScript = thePlayer.GetComponent<HealthScript>();
 		//Rigidbody2D rigidMe = GetComponent<Rigidbody2D> ();
 
 	}
@@ -30,12 +30,12 @@ public class AttackScript : MonoBehaviour {
 			rigidPlayer.AddForce (dir * force);
 
 
-			if (HPScript.healthPoints > 0f) {
+			if (PlayerHPScript.healthPoints > 0f) {
 				
-				HPScript.TakeDamge (attackDamage);
+				PlayerHPScript.TakeDamge (attackDamage);
 				
 
-			} else if (HPScript.healthPoints <= 0f) {
+			} else if (PlayerHPScript.healthPoints <= 0f) {
 				print ("Handle this better :D maybe a gameOver Screen");
 				Destroy (thePlayer);
 
