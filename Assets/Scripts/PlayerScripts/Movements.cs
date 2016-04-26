@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Movements : MonoBehaviour {
 	public float Speed = 2.5f;
-	private const float minBound = -4.85f;
-	private const float maxBound = 4.85f;
+	private const float minBound = -9999f;
+	private const float maxBound = 9999f;
 	bool w = false;
 	bool s = false;
 	bool a = false;

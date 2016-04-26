@@ -6,7 +6,7 @@ public class fly : MonoBehaviour {
 	// Use this for initialization
 	GameObject target;
 	Vector2 heading;
-	float speed = 350;
+	float speed = 2000;
 	Rigidbody2D rb;
 	Rigidbody2D tRb;
 
