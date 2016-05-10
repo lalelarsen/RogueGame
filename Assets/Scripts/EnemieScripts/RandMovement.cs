@@ -11,11 +11,6 @@ public class RandMovement : MonoBehaviour {
 	public int PMMin = -1;
 	public int PMMax = 2;
 
-	public bool blockedN = false;
-	public bool blockedS = false;
-	public bool blockedE = false;
-	public bool blockedW = false;
-
 	Rigidbody2D rb;
 	//public GameObject Playermove;
 	private float distance;
@@ -42,12 +37,9 @@ public class RandMovement : MonoBehaviour {
  	}
 	public void EnemyChaseMovement (GameObject PlayerPos, float chaseDist){
 		
-		if (blockedN) {
-			Vector2 newPosition = new Vector2 (PlayerPos.transform.position.x, transform.position.y);	
-			transform.position = Vector2.MoveTowards (transform.position, newPosition, speed * Time.deltaTime);
-		} else {
+
 			transform.position = Vector2.MoveTowards (transform.position, PlayerPos.transform.position, speed * Time.deltaTime);
-		}
+
 	}
 
 	public void RandomEnemyMovement(){
@@ -58,12 +50,12 @@ public class RandMovement : MonoBehaviour {
 			// bevægelse på Y Axen
 			if (PlusMinusDestinc == 1) {
 				// bevæg dig + på Y Axen
-				Vector2 newYPPos = new Vector2  ( transform.position.x, Mathf.Clamp(transform.position.y + speed * Time.deltaTime, minBound, maxBound));
+				Vector2 newYPPos = new Vector2  (transform.position.x, transform.position.y + speed * Time.deltaTime);
 
 				transform.position = newYPPos;
 			} else {
 				// bevæg dig - på Y Axen
-				Vector2 newYMPos = new Vector2 (transform.position.x, Mathf.Clamp(transform.position.y - speed * Time.deltaTime, minBound, maxBound));
+				Vector2 newYMPos = new Vector2 (transform.position.x, transform.position.y - speed * Time.deltaTime);
 				transform.position = newYMPos;
 			}
 
@@ -72,11 +64,11 @@ public class RandMovement : MonoBehaviour {
 			// bevægelse på X Axen
 			if (PlusMinusDestinc == 1) {
 				// bevæg dig + på X Axen
-				Vector2 newXPPos = new Vector2 (Mathf.Clamp(transform.position.x + speed * Time.deltaTime, minBound, maxBound), transform.position.y);
+				Vector2 newXPPos = new Vector2 (transform.position.x + speed * Time.deltaTime, transform.position.y);
 				transform.position = newXPPos;
 			} else {
 				// bevæg dig - på X Axen
-				Vector2 newXMPos = new Vector2 (Mathf.Clamp(transform.position.x - speed * Time.deltaTime, minBound, maxBound), transform.position.y);
+				Vector2 newXMPos = new Vector2 (transform.position.x - speed * Time.deltaTime, transform.position.y);
 				transform.position = newXMPos;
 			}
 
