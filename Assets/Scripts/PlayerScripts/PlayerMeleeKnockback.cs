@@ -20,7 +20,7 @@ public class PlayerMeleeKnockback : MonoBehaviour {
 		Rigidbody2D targetRB = target.GetComponent<Rigidbody2D> ();
 		Vector2 dir = (target.transform.position - player.transform.position);			
 
-		targetRB.AddForce (dir * 100);
+		targetRB.AddForce (dir * 400);
 	}
 
 }
