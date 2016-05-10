@@ -6,6 +6,7 @@ public class Generater : MonoBehaviour {
 
 	public GameObject[] tiles;
 	public GameObject wall;
+	public GameObject[] enemies;
 	public List <Vector3> createdTiles;
 	public int tileAmount;
 	public int tileSize;
@@ -83,6 +84,7 @@ public class Generater : MonoBehaviour {
 	void Finish(){
 		createWallValues ();
 		createWalls ();
+		createEnemies ();
 	}
 
 	void createWallValues(){
@@ -111,6 +113,22 @@ public class Generater : MonoBehaviour {
 					Instantiate (wall, new Vector3 ((minX - (extraWallX * tileSize) / 2) + (x * tileSize), (minY - (extraWallY * tileSize) / 2) + (y * tileSize)), transform.rotation);
 				}
 			}	
+		}
+	}
+
+	void createEnemies(){
+		for (int i = 0; i < createdTiles.Count; i++) {
+			float dir = Random.Range (0f, 1f);
+			if (dir > 0.75f) {
+				GameObject e;
+				float chance = Random.Range (0f, 1f);
+				if (chance > 0.50) {
+					e = enemies [0];
+				} else {
+					e = enemies [1];
+				}
+				Instantiate (e, createdTiles[i], transform.rotation);
+			}
 		}
 	}
 }
