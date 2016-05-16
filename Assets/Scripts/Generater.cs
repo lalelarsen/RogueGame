@@ -84,7 +84,7 @@ public class Generater : MonoBehaviour {
 	void Finish(){
 		createWallValues ();
 		createWalls ();
-		createEnemies ();
+		//createEnemies ();
 	}
 
 	void createWallValues(){

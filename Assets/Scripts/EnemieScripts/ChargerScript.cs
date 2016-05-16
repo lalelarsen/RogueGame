@@ -22,26 +22,27 @@ public class ChargerScript : MonoBehaviour {
 	}
 
 	void Update () {
+		Debug.Log ("stun " + stunned);
+		Debug.Log ("charg " + charging);
 		if (stunned) {
-			if (Time.time > lastStunned + stunTime) {
-				Debug.Log (stunned);
+			if (Time.time > lastStunned + stunTime) {				
 				stunned = false;
 			}
 		} else {
 			if (charging) {
 				EnemyCharging ();
 			} else {
-				//EnemyMovement ();
+				EnemyMovement ();
 
 				if (target.transform.position.x > transform.position.x - 0.4f && target.transform.position.x < transform.position.x + 0.4f) {
-					if (target.transform.position.x - transform.position.x > 0) {
+					if ((target.transform.position.x - transform.position.x) > 0) {
 						charginDirection = new Vector2 (0, 1);
 					} else {
 						charginDirection = new Vector2 (0, -1);
 					}
 					charging = true;
 				} else if (target.transform.position.y > transform.position.y - 0.4f && target.transform.position.y < transform.position.y + 0.4f) {
-					if (target.transform.position.y - transform.position.y > 0) {
+					if ((target.transform.position.y - transform.position.y) > 0) {
 						charginDirection = new Vector2 (1, 0);
 					} else {
 						charginDirection = new Vector2 (-1, 0);
@@ -55,18 +56,18 @@ public class ChargerScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		Debug.Log (other.name);
-		if (true) {
-			if (charging) {
-				stunned = true;
-				lastStunned = Time.time;
-			} else {
-				CDirection = !CDirection;
-			}
+		if (charging) {
+			transform.position = transform.position - charginDirection * 2;
+			stunned = true;
+			lastStunned = Time.time;
+			charging = false;
+		} else {
+			CDirection = !CDirection;
 		}
 	}
 
 	public void EnemyCharging(){
-		transform.position = transform.position + charginDirection * speed * 2 * Time.deltaTime;
+		transform.position = transform.position + charginDirection * speed * 9 * Time.deltaTime;
 	}
 
 	public void EnemyMovement(){
