@@ -33,7 +33,7 @@ public class Shooting : MonoBehaviour {
 			Vector2 n = rb.velocity * -1 * 3;
 			rb.AddForce (n);
 		}
-		Vector2 movedir = transform.position - player.transform.position;
+		Vector3 movedir = player.transform.position - transform.position;
 		distance = Vector2.Distance (gameObject.transform.position, player.transform.position);
 		if (distance < 20) {
 			GetAway (movedir);
@@ -64,9 +64,9 @@ public class Shooting : MonoBehaviour {
 			}
 		}
 	}
-	private void GetAway(Vector2 runDir){
-		
-		transform.position = Vector2.MoveTowards (transform.position, runDir , speed * Time.deltaTime);
-
+	private void GetAway(Vector3 runDir){
+		Vector3 temp = player.transform.position - runDir *2;
+		transform.position = Vector2.MoveTowards (transform.position, temp, speed * Time.deltaTime);
+		//transform.position = Vector2.MoveTowards (transform.position, runDir , speed * Time.deltaTime);
 	}
 }

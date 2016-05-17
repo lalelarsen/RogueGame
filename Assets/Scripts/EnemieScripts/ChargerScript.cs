@@ -13,10 +13,12 @@ public class ChargerScript : MonoBehaviour {
 	bool lowStunned = false;
 	float lastStunned;
 	public bool spotted;
+	Rigidbody2D rb;
 
 	Vector3 charginDirection;
 
 	void Start () {
+		rb = GetComponent<Rigidbody2D> ();
 		target = GameObject.Find ("Player");
 		float temp = Random.Range (0f, 1f);
 		if(temp < 0.5){ compass = true; } else { compass = false; }
@@ -55,6 +57,10 @@ public class ChargerScript : MonoBehaviour {
 					}
 				}
 			}
+		}
+		if(rb.velocity.x != 0 || rb.velocity.y != 0){
+			Vector2 n = rb.velocity * -1 * 6;
+			rb.AddForce (n);
 		}
 		//Debug.Log (charginDirection);
 	}
