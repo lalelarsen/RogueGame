@@ -84,7 +84,7 @@ public class Generater : MonoBehaviour {
 	void Finish(){
 		createWallValues ();
 		createWalls ();
-		createEnemies ();
+		//createEnemies ();
 	}
 
 	void createWallValues(){
@@ -125,7 +125,7 @@ public class Generater : MonoBehaviour {
 				if (chance > 0.50) {
 					e = enemies [0];
 				} else {
-					e = enemies [1];
+					e = enemies [2];
 				}
 				Instantiate (e, createdTiles[i], transform.rotation);
 			}

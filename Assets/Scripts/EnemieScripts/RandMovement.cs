@@ -11,12 +11,18 @@ public class RandMovement : MonoBehaviour {
 	public int PMMin = -1;
 	public int PMMax = 2;
 
+	bool chasing = false;
+	bool CDirection = true;
+	bool compass;
+
 	Rigidbody2D rb;
 	//public GameObject Playermove;
 	private float distance;
 	// Use this for initialization
 	void Start () {
 		rb = gameObject.GetComponent<Rigidbody2D> ();
+		float temp = Random.Range (0f, 1f);
+		if(temp < 0.5){ compass = true; } else { compass = false; }
 	}
 
 	// Update is called once per frame
@@ -26,8 +32,11 @@ public class RandMovement : MonoBehaviour {
 		if(distance < chaseDistance){
 			//Debug.Log ("im chasin you!!!");
 			EnemyChaseMovement (Playermove , chaseDistance);
+			chasing = true;
 		}else{
-			RandomEnemyMovement ();	
+			//RandomEnemyMovement ();	
+			EnemyMovement();
+			chasing = false;
 		}
 		if(rb.velocity.x != 0 || rb.velocity.y != 0){
 			Vector2 n = rb.velocity * -1 * 3;
@@ -40,6 +49,28 @@ public class RandMovement : MonoBehaviour {
 
 			transform.position = Vector2.MoveTowards (transform.position, PlayerPos.transform.position, speed * Time.deltaTime);
 
+	}
+
+	public void EnemyMovement(){
+		Vector2 newPos;
+		if (compass) {
+			if (CDirection) {
+				newPos = new Vector2 (transform.position.x + speed * Time.deltaTime, transform.position.y);
+			} else {
+				newPos = new Vector2 (transform.position.x - speed * Time.deltaTime, transform.position.y);
+			}
+		} else {
+			if (CDirection) {
+				newPos = new Vector2 (transform.position.x, transform.position.y + speed * Time.deltaTime);
+			} else {
+				newPos = new Vector2(transform.position.x, transform.position.y - speed * Time.deltaTime);
+			}
+		}
+		transform.position = newPos;
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		CDirection = !CDirection;
 	}
 
 	public void RandomEnemyMovement(){
