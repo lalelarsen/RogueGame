@@ -87,8 +87,7 @@ public class Generater : MonoBehaviour {
 	}
 	void Finish(){
 		createEnemies ();
-		initializeStartRoom ();
-		initializeBossRoom ();
+		initializeRooms ();
 		createWallValues ();
 		createWalls ();
 
@@ -141,13 +140,25 @@ public class Generater : MonoBehaviour {
 		}
 	}
 
-	void initializeStartRoom(){
-		float dir = Random.Range (0f, 1f);
+	void initializeRooms(){
+		float order = Random.Range (0f, 1f);
+		List <Vector3> finalStartTiles = initializeStartRoom (order);
+		List <Vector3> finalBossTiles = initializeBossRoom (order);
+		for (int i = 0; i < finalStartTiles.Count; i++) {
+			createdTiles.Add(finalStartTiles[i]);
+		}
+		for (int i = 0; i < finalBossTiles.Count; i++) {
+			createdTiles.Add(finalBossTiles[i]);
+		}
+
+	}
+
+	List <Vector3> initializeStartRoom(float order){
 		Vector2 temp = new Vector2(0,0);
 		List<Vector3> vList = new List<Vector3>();
 		float maxX = 0;
 		float maxY = 0;
-		if (dir < 0.25f) {
+		if (order > 0.75f) {
 			maxX = -999;
 			maxY = -999;
 			for (int i = 0; i < createdTiles.Count; i++) {
@@ -162,7 +173,7 @@ public class Generater : MonoBehaviour {
 				if(vList[k].x > maxX){maxX = vList [k].x;}
 			}
 			temp = new Vector2 (maxX, maxY);
-		} else if (dir < 0.50f) {
+		} else if (order > 0.50f) {
 			maxX = 999;
 			maxY = -999;
 			for (int i = 0; i < createdTiles.Count; i++) {
@@ -177,7 +188,7 @@ public class Generater : MonoBehaviour {
 				if(vList[k].x < maxX){maxX = vList [k].x;}
 			}
 			temp = new Vector2 (maxX, maxY);
-		} else if (dir < 0.75f) {
+		} else if (order > 0.25f) {
 			maxX = -999;
 			maxY = 999;
 			for (int i = 0; i < createdTiles.Count; i++) {
@@ -208,27 +219,27 @@ public class Generater : MonoBehaviour {
 			}
 			temp = new Vector2 (maxX, maxY);
 		}
-		Debug.Log (temp);
-		if (dir < 0.5) {
+		List <Vector3> endTiles = new List<Vector3>();
+		if (order > 0.5) {
 			for (int i = 0; i < startTiless.Length; i++) {
-				createdTiles.Add (new Vector3 (temp.x + startTiless [i].x, temp.y + startTiless [i].y));
+				endTiles.Add (new Vector3 (temp.x + startTiless [i].x, temp.y + startTiless [i].y));
 			}
 			Instantiate (startRoom, temp, transform.rotation);
 		} else {
 			for (int i = 0; i < startTiless.Length; i++) {
-				createdTiles.Add (new Vector3 (temp.x + startTiless [i].x, temp.y + startTiless [i].y*-1));
+				endTiles.Add (new Vector3 (temp.x + startTiless [i].x, temp.y + startTiless [i].y*-1));
 			}
 			Instantiate (startRoom, temp, Quaternion.Euler(180,0,0));
 		}
+		return endTiles;
 	}
 
-	void initializeBossRoom(){
-		float dir = Random.Range (0f, 1f);
+	List <Vector3> initializeBossRoom(float order){
 		Vector2 temp = new Vector2(0,0);
 		List<Vector3> vList = new List<Vector3>();
 		float maxX = 0;
 		float maxY = 0;
-		if (dir < 0.25f) {
+		if (order < 0.25f) {
 			maxX = -999;
 			maxY = -999;
 			for (int i = 0; i < createdTiles.Count; i++) {
@@ -243,7 +254,7 @@ public class Generater : MonoBehaviour {
 				if(vList[k].y > maxY){maxY = vList [k].y;}
 			}
 			temp = new Vector2 (maxX, maxY);
-		} else if (dir < 0.50f) {
+		} else if (order < 0.50f) {
 			maxX = -999;
 			maxY = 999;
 			for (int i = 0; i < createdTiles.Count; i++) {
@@ -258,7 +269,7 @@ public class Generater : MonoBehaviour {
 				if(vList[k].y < maxY){maxY = vList [k].y;}
 			}
 			temp = new Vector2 (maxX, maxY);
-		} else if (dir < 0.75f) {
+		} else if (order < 0.75f) {
 			maxX = 999;
 			maxY = -999;
 			for (int i = 0; i < createdTiles.Count; i++) {
@@ -290,18 +301,19 @@ public class Generater : MonoBehaviour {
 			temp = new Vector2 (maxX, maxY);
 
 		}
-		Debug.Log (temp);
-		if (dir > 0.5) {
+
+		List <Vector3> endTiles = new List<Vector3>();;
+		if (order > 0.5) {
 			for (int i = 0; i < bossTiles.Length; i++) {
-				createdTiles.Add (new Vector3 (temp.x + bossTiles [i].x, temp.y + bossTiles [i].y));
+				endTiles.Add (new Vector3 (temp.x + bossTiles [i].x, temp.y + bossTiles [i].y));
 			}
 			Instantiate (bossRoom, temp, transform.rotation);
 		} else {
 			for (int i = 0; i < bossTiles.Length; i++) {
-				createdTiles.Add(new Vector3(temp.x + bossTiles[i].x * -1, temp.y + bossTiles[i].y));
+				endTiles.Add(new Vector3(temp.x + bossTiles[i].x * -1, temp.y + bossTiles[i].y));
 			}
 			Instantiate (bossRoom, temp, Quaternion.Euler(0,180,0));
 		}
-
+		return endTiles;
 	}
 }
