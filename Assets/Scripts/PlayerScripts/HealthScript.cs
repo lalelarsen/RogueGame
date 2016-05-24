@@ -12,14 +12,15 @@ public class HealthScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		if (healthPoints <= 0) {
-			Destroy (gameObject);
-		}
+
 	}
 
 	public float TakeDamge(float dmg){
-		
+
+		if (healthPoints <= 0) {
+			Destroy (gameObject);
+		}
+
 		return healthPoints = healthPoints - dmg;
 
 	}

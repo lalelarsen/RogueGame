@@ -35,10 +35,6 @@ public class AttackScript : MonoBehaviour {
 				PlayerHPScript.TakeDamge (attackDamage);
 				
 
-			} else if (PlayerHPScript.healthPoints <= 0f) {
-				print ("Handle this better :D maybe a gameOver Screen");
-				Destroy (thePlayer);
-
 			}
 
 		}
