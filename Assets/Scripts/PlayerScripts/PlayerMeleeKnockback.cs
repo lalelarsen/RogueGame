@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerMeleeKnockback : MonoBehaviour {
-
+	
 	GameObject player;
 
 	void Start () {
@@ -17,6 +17,7 @@ public class PlayerMeleeKnockback : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		Debug.Log (other.name);
 		GameObject target = other.gameObject;
+		target.GetComponent<HealthScript> ().TakeDamge (5f);
 		Rigidbody2D targetRB = target.GetComponent<Rigidbody2D> ();
 		Vector2 dir = (target.transform.position - player.transform.position);			
 
