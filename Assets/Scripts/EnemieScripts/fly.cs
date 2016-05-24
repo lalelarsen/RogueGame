@@ -21,6 +21,7 @@ public class fly : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.name == "Player") {
+			target.GetComponent<HealthScript> ().TakeDamge (10f);
 			tRb.AddForce (heading * speed/6);
 		} 
 		if (other.gameObject != Shooter) {
