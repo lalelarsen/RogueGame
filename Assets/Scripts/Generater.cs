@@ -9,12 +9,16 @@ public class Generater : MonoBehaviour {
 	public GameObject[] enemies;
 	public GameObject startRoom;
 	public GameObject bossRoom;
+	GameObject player;
 	public List <Vector3> createdTiles;
 	public Vector3[] bossTiles = {new Vector3(-16,0,0), new Vector3(-32,0,0), new Vector3(-48,0,0), new Vector3(-64,0,0), new Vector3(-144,32,0), new Vector3(-128,32,0), new Vector3(-112,32,0), new Vector3(-96,32,0), new Vector3(-80,32,0), new Vector3(-144,16,0), new Vector3(-128,16,0), new Vector3(-112,16,0), new Vector3(-96,16,0), new Vector3(-80,16,0), new Vector3(-144,0,0), new Vector3(-128,0,0), new Vector3(-112,0,0), new Vector3(-96,0,0), new Vector3(-80,0,0), new Vector3(-144,-32,0), new Vector3(-128,-32,0), new Vector3(-112,-32,0), new Vector3(-96,-32,0), new Vector3(-80,-32,0), new Vector3(-144,-16,0), new Vector3(-128,-16,0), new Vector3(-112,-16,0), new Vector3(-96,-16,0), new Vector3(-80,-16,0)};
 	public Vector3[] startTiless = {new Vector3(-16,64,0),new Vector3(-16,48,0),new Vector3(-16,32,0),new Vector3(0,64,0),new Vector3(0,48,0),new Vector3(0,32,0),new Vector3(16,64,0),new Vector3(16,48,0),new Vector3(16,32,0),new Vector3(0,16,0)};
+	public Vector3 playerSpawn;
+	public Vector3 bossSpawn;
 	public int tileAmount;
 	public int tileSize;
 	public float waitTime;
+	public bool isDone = false;
 
 	public float chanceUp;
 	public float chanceRight;
@@ -30,6 +34,7 @@ public class Generater : MonoBehaviour {
 	public float extraWallY;
 
 	void Start () {
+		player = GameObject.Find ("Player");
 		StartCoroutine (GenerateLevel ());
 	}
 
@@ -90,7 +95,8 @@ public class Generater : MonoBehaviour {
 		initializeRooms ();
 		createWallValues ();
 		createWalls ();
-
+		instantiatePlayer ();
+		isDone = true;
 	}
 
 	void createWallValues(){
@@ -224,11 +230,14 @@ public class Generater : MonoBehaviour {
 			for (int i = 0; i < startTiless.Length; i++) {
 				endTiles.Add (new Vector3 (temp.x + startTiless [i].x, temp.y + startTiless [i].y));
 			}
+			playerSpawn = new Vector3(temp.x, temp.y + 48, 0);
 			Instantiate (startRoom, temp, transform.rotation);
 		} else {
 			for (int i = 0; i < startTiless.Length; i++) {
 				endTiles.Add (new Vector3 (temp.x + startTiless [i].x, temp.y + startTiless [i].y*-1));
 			}
+			Debug.Log (temp);
+			playerSpawn = new Vector3(temp.x, temp.y - 48, 0);
 			Instantiate (startRoom, temp, Quaternion.Euler(180,0,0));
 		}
 		return endTiles;
@@ -307,13 +316,19 @@ public class Generater : MonoBehaviour {
 			for (int i = 0; i < bossTiles.Length; i++) {
 				endTiles.Add (new Vector3 (temp.x + bossTiles [i].x, temp.y + bossTiles [i].y));
 			}
+			bossSpawn = new Vector3(temp.x - 128, temp.y, 0);
 			Instantiate (bossRoom, temp, transform.rotation);
 		} else {
 			for (int i = 0; i < bossTiles.Length; i++) {
 				endTiles.Add(new Vector3(temp.x + bossTiles[i].x * -1, temp.y + bossTiles[i].y));
 			}
+			bossSpawn = new Vector3(temp.x + 128, temp.y, 0);
 			Instantiate (bossRoom, temp, Quaternion.Euler(0,180,0));
 		}
 		return endTiles;
+	}
+
+	void instantiatePlayer(){
+		player.transform.position = playerSpawn;
 	}
 }
